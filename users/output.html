@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Parsing Output Files &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Users’ Guide" href="index.html" />
+    <link rel="next" title="6. Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="4. Running MEASURE" href="running.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="6. Frequently Asked Questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="4. Running MEASURE"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Users&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="parsing-output-files">
+<h1>5. Parsing Output Files<a class="headerlink" href="#parsing-output-files" title="Permalink to this headline">¶</a></h1>
+<p>The syntax of MEASURE output files closely mirrors that of the input files.
+The output files contain two sections:</p>
+<ul class="simple">
+<li>The first section contains all of the species involved in the reaction
+network, including the bath gas(es), as <tt class="docutils literal"><span class="pre">species()</span></tt> blocks. This is largely
+a reproduction of the same section of the input file.</li>
+<li>The second section contains all of the path reactions - reactions between any
+pair of molecular configurations on the potential energy surface, not just
+those directly adjacent - as <tt class="docutils literal"><span class="pre">pdepreaction()</span></tt> blocks. The parameters of each
+<tt class="docutils literal"><span class="pre">pdepreaction()</span></tt> block match those of the <tt class="docutils literal"><span class="pre">reaction()</span></tt> block from the
+input file, except that no transition state data is given and the <tt class="docutils literal"><span class="pre">kinetics</span></tt>
+are by definition pressure-dependent.</li>
+</ul>
+<p>The <tt class="docutils literal"><span class="pre">examples</span></tt> directory contains both MEASURE input files and the resulting
+output files.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="running.html"
+                        title="previous chapter">4. Running MEASURE</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="faq.html"
+                        title="next chapter">6. Frequently Asked Questions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/output.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="6. Frequently Asked Questions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="4. Running MEASURE"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Users&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

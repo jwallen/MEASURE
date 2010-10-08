@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Introduction &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Developers’ Guide" href="index.html" />
+    <link rel="next" title="2. measure.input - Input file reading" href="input.html" />
+    <link rel="prev" title="MEASURE Developers’ Guide" href="index.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="input.html" title="2. measure.input - Input file reading"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="MEASURE Developers’ Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The following is a reference to the application programming interface (API)
+used within MEASURE. If you are a developer wishing to know the full
+implementation details of MEASURE - e.g. if you are trying to modify the
+codebase - this document is for you. If you are simply trying to learn how to
+generate phenomenological rate coefficients with MEASURE, you should switch to
+the <a class="reference internal" href="../users/index.html#usersguide"><em>MEASURE Users&#8217; Guide</em></a>. If you want to know the mathematical basis for the
+master equation methods used by measure, you should read the <a class="reference internal" href="../theory/index.html#theory"><em>MEASURE Theory Guide</em></a>.
+(In fact, if you haven&#8217;t already, you may wish to read these documents first
+before continuing.)</p>
+<p>The source for MEASURE is split across a number of Python and Cython modules.
+Each section of the developers&#8217; guide references a different module:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Module</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><a class="reference internal" href="input.html#module-measure.input" title="measure.input"><tt class="xref py py-mod docutils literal"><span class="pre">measure.input</span></tt></a></td>
+<td>Reading network data from input files</td>
+</tr>
+<tr><td><a class="reference internal" href="network.html#module-measure.network" title="measure.network"><tt class="xref py py-mod docutils literal"><span class="pre">measure.network</span></tt></a></td>
+<td>Representing network data in memory</td>
+</tr>
+<tr><td><a class="reference internal" href="collision.html#module-measure.collision" title="measure.collision"><tt class="xref py py-mod docutils literal"><span class="pre">measure.collision</span></tt></a></td>
+<td>Working with collision models and parameters</td>
+</tr>
+<tr><td><a class="reference internal" href="reaction.html#module-measure.reaction" title="measure.reaction"><tt class="xref py py-mod docutils literal"><span class="pre">measure.reaction</span></tt></a></td>
+<td>Working with microcanonical and phenomenological rate coefficients</td>
+</tr>
+<tr><td><a class="reference internal" href="msc.html#module-measure.msc" title="measure.msc"><tt class="xref py py-mod docutils literal"><span class="pre">measure.msc</span></tt></a></td>
+<td>Determining <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> via the modified strong collision method</td>
+</tr>
+<tr><td><a class="reference internal" href="rs.html#module-measure.rs" title="measure.rs"><tt class="xref py py-mod docutils literal"><span class="pre">measure.rs</span></tt></a></td>
+<td>Determining <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> via the reservoir state method</td>
+</tr>
+<tr><td><a class="reference internal" href="output.html#module-measure.output" title="measure.output"><tt class="xref py py-mod docutils literal"><span class="pre">measure.output</span></tt></a></td>
+<td>Writing network data to input and output files</td>
+</tr>
+<tr><td><a class="reference internal" href="settings.html#module-measure.settings" title="measure.settings"><tt class="xref py py-mod docutils literal"><span class="pre">measure.settings</span></tt></a></td>
+<td>Setting application-wide options</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">MEASURE Developers&#8217; Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="input.html"
+                        title="next chapter">2. <tt class="docutils literal docutils literal"><span class="pre">measure.input</span></tt> - Input file reading</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="input.html" title="2. measure.input - Input file reading"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="MEASURE Developers’ Guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

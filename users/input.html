@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Creating Input Files &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Users’ Guide" href="index.html" />
+    <link rel="next" title="4. Running MEASURE" href="running.html" />
+    <link rel="prev" title="2. Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="4. Running MEASURE"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="2. Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Users&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="creating-input-files">
+<h1>3. Creating Input Files<a class="headerlink" href="#creating-input-files" title="Permalink to this headline">¶</a></h1>
+<p>There are three parts to a MEASURE input file, giving the species, path
+reaction, and algorithm parameters. The species section must come before the
+reaction section. Before discussing each of these sections, a brief word on the
+input file syntax will be provided.</p>
+<div class="section" id="syntax">
+<h2>3.1. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>The format of MEASURE input files is based on Python syntax. In fact, MEASURE
+input files are valid Python source code, and this is used to facilitate
+reading of the file.</p>
+<p>Each section is made up of one or more function calls, where parameters are
+specified as text strings, numbers, or objects. Text strings must be wrapped in
+either single or double quotes. There are two ways to specify numeric
+quantities:</p>
+<ul class="simple">
+<li>Dimensionless quantities or values already in SI units can be specified as
+a simple literal, such as <tt class="docutils literal"><span class="pre">0.99</span></tt>.</li>
+<li>Quantities not in SI units are specified using a tuple of the form
+<tt class="docutils literal"><span class="pre">(value,</span> <span class="pre">units)</span></tt>, where <tt class="docutils literal"><span class="pre">value</span></tt> is either a single number or a list of
+numbers, and <tt class="docutils literal"><span class="pre">units</span></tt> is a string, e.g. <tt class="docutils literal"><span class="pre">(-10.0,'kcal/mol')</span></tt> and
+<tt class="docutils literal"><span class="pre">([1.0,</span> <span class="pre">2.0,</span> <span class="pre">3.0],&quot;m&quot;)</span></tt>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">MEASURE uses the <tt class="docutils literal"><span class="pre">quantities</span></tt> package to convert your numeric parameters
+into SI units, and therefore inherits all of the idiosyncracies from that
+package. In particular, the <tt class="docutils literal"><span class="pre">quantities</span></tt> package does <em>not</em>
+follow the SI convention that all units after the circumflex are in the
+denominator. For example, <tt class="docutils literal"><span class="pre">J/mol*K</span></tt> would be interpreted as <tt class="docutils literal"><span class="pre">(J/mol)*K</span></tt>
+rather than <tt class="docutils literal"><span class="pre">J/(mol*K)</span></tt>. Thus we recommend using parentheses where
+necessary to make your intentions explicit.</p>
+</div>
+</div>
+<div class="section" id="species-parameters">
+<h2>3.2. Species Parameters<a class="headerlink" href="#species-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Each species in the network must be specified using a <tt class="docutils literal"><span class="pre">species()</span></tt> block.
+This includes all unimolecular isomers, bimolecular reactants and products,
+and the bath gas(es). A species that appears in multiple bimolecular channels
+need only be specified with a single <tt class="docutils literal"><span class="pre">species()</span></tt> block.</p>
+<p>There are a number of required and optional parameters associated with a species
+block:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="15%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Required?</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">label</span></tt></td>
+<td>all species</td>
+<td>A unique string label used as an identifier</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">E0</span></tt></td>
+<td>all species</td>
+<td>The ground-state energy (including zero-point energy)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">states</span></tt></td>
+<td>isomers, reactants</td>
+<td>The molecular degrees of freedom (see below)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">lennardJones</span></tt></td>
+<td>isomers, bath gas</td>
+<td>The Lennard-Jones parameters, using a <tt class="docutils literal"><span class="pre">LennardJones</span></tt> call</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">molecularWeight</span></tt></td>
+<td>isomers, bath gas</td>
+<td>The molecular weight</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">thermo</span></tt></td>
+<td>&nbsp;</td>
+<td>The macroscopic thermodynamic parameters</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">SMILES</span></tt></td>
+<td>&nbsp;</td>
+<td>The <a class="reference external" href="http://en.wikipedia.org/wiki/SMILES">SMILES</a> string describing the chemical structure</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">InChI</span></tt></td>
+<td>&nbsp;</td>
+<td>The <a class="reference external" href="http://en.wikipedia.org/wiki/InChI">InChI</a> string describing the chemical structure</td>
+</tr>
+</tbody>
+</table>
+<p>If you specify the molecular structure via SMILES or InChI strings and omit the
+molecular weight, the code will compute the molecular weight for you.</p>
+<p>The <cite>states</cite> parameter is required for all unimolecular isomers and all
+bimolecular reactant channels. When specifying the <tt class="docutils literal"><span class="pre">states</span></tt> parameter, use a
+<tt class="docutils literal"><span class="pre">States()</span></tt> function with the following parameters:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">rotationalConstants</span></tt></td>
+<td>A list of the external rotational constants</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">symmetry</span></tt></td>
+<td>The external symmetry number</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">frequencies</span></tt></td>
+<td>A list of the vibrational frequencies</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">frequencyScaleFactor</span></tt></td>
+<td>The frequency scale factor to use (1.0 if not specified)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">hinderedRotors</span></tt></td>
+<td>A list of simple Pitzer hindered rotors, specified as 3-tuples (<tt class="docutils literal"><span class="pre">frequency</span></tt>, <tt class="docutils literal"><span class="pre">barrier</span></tt>, <tt class="docutils literal"><span class="pre">symmetry</span></tt>)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">spinMultiplicity</span></tt></td>
+<td>The ground-state spin multiplicity (degeneracy)</td>
+</tr>
+</tbody>
+</table>
+<p>If <tt class="docutils literal"><span class="pre">states</span></tt> is specified and <tt class="docutils literal"><span class="pre">thermo</span></tt> is not, then the thermodynamic
+parameters will be automatically computed. This is recommended unless you have
+thermodynamic data that you believe to be more accurate than the molecular
+degrees of freedom data. You can use any of the thermodynamics models in the
+<tt class="docutils literal"><span class="pre">chempy.thermo</span></tt> module (from the ChemPy package); see that package for more
+information on the available models and their syntax.</p>
+<p>The following is an example of a typical species item, based on the acetylperoxy
+radical <img class="math" src="../_images/math/a05653fda41a1d3f75eaf1feae2e5396174a78c8.png" alt="\ce{CH3C(=O)OO.}"/>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">species</span><span class="p">(</span>
+    <span class="n">label</span><span class="o">=</span><span class="s">&quot;acetylperoxy&quot;</span><span class="p">,</span>
+    <span class="n">SMILES</span><span class="o">=</span><span class="s">&quot;CC(=O)O[O]&quot;</span><span class="p">,</span>
+    <span class="n">E0</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">144.766</span><span class="p">,</span><span class="s">&quot;kJ/mol&quot;</span><span class="p">),</span>
+    <span class="n">states</span><span class="o">=</span><span class="n">States</span><span class="p">(</span>
+        <span class="n">rotationalConstants</span><span class="o">=</span><span class="p">([</span><span class="mf">54.2978</span><span class="p">,</span> <span class="mf">104.836</span><span class="p">,</span> <span class="mf">156.049</span><span class="p">],</span> <span class="s">&quot;amu/angstrom^2&quot;</span><span class="p">),</span>
+        <span class="n">symmetry</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">frequencies</span><span class="o">=</span><span class="p">([</span><span class="mf">321.607</span><span class="p">,</span> <span class="mf">503.468</span><span class="p">,</span> <span class="mf">539.885</span><span class="p">,</span> <span class="mf">547.148</span><span class="p">,</span> <span class="mf">731.506</span><span class="p">,</span> <span class="mf">979.187</span><span class="p">,</span> <span class="mf">1043.98</span><span class="p">,</span> <span class="mf">1126.42</span><span class="p">,</span> <span class="mf">1188.62</span><span class="p">,</span> <span class="mf">1399.43</span><span class="p">,</span> <span class="mf">1458.2</span><span class="p">,</span> <span class="mf">1463.42</span><span class="p">,</span> <span class="mf">1881.7</span><span class="p">,</span> <span class="mf">3055.28</span><span class="p">,</span> <span class="mf">3115.45</span><span class="p">,</span> <span class="mf">3155.14</span><span class="p">],</span> <span class="s">&quot;cm^-1&quot;</span><span class="p">),</span>
+        <span class="n">frequencyScaleFactor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">hinderedRotors</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">((</span><span class="mf">7.38359</span><span class="p">,</span><span class="s">&quot;amu*angstrom^2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mf">25.5921</span><span class="p">,</span><span class="s">&quot;kJ/mol&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="p">((</span><span class="mf">2.94725</span><span class="p">,</span><span class="s">&quot;amu*angstrom^2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.11105</span><span class="p">,</span><span class="s">&quot;kJ/mol&quot;</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">spinMultiplicity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">thermo</span><span class="o">=</span><span class="n">ThermoGAModel</span><span class="p">(</span>
+        <span class="n">Tdata</span><span class="o">=</span><span class="p">([</span><span class="mf">303.231</span><span class="p">,</span> <span class="mf">385.553</span><span class="p">,</span> <span class="mf">467.875</span><span class="p">,</span> <span class="mf">550.197</span><span class="p">,</span> <span class="mf">632.519</span><span class="p">,</span> <span class="mf">714.841</span><span class="p">,</span> <span class="mf">797.163</span><span class="p">,</span> <span class="mf">879.485</span><span class="p">,</span> <span class="mf">961.807</span><span class="p">,</span> <span class="mf">1044.13</span><span class="p">,</span> <span class="mf">1126.45</span><span class="p">,</span> <span class="mf">1208.77</span><span class="p">,</span> <span class="mf">1291.09</span><span class="p">,</span> <span class="mf">1373.42</span><span class="p">,</span> <span class="mf">1455.74</span><span class="p">,</span> <span class="mf">1538.06</span><span class="p">,</span> <span class="mf">1620.38</span><span class="p">,</span> <span class="mf">1702.7</span><span class="p">,</span> <span class="mf">1785.03</span><span class="p">,</span> <span class="mf">1867.35</span><span class="p">],</span> <span class="s">&quot;K&quot;</span><span class="p">),</span>
+        <span class="n">Cpdata</span><span class="o">=</span><span class="p">([</span><span class="mf">80.917</span><span class="p">,</span> <span class="mf">92.4545</span><span class="p">,</span> <span class="mf">102.856</span><span class="p">,</span> <span class="mf">111.821</span><span class="p">,</span> <span class="mf">119.406</span><span class="p">,</span> <span class="mf">125.81</span><span class="p">,</span> <span class="mf">131.243</span><span class="p">,</span> <span class="mf">135.887</span><span class="p">,</span> <span class="mf">139.882</span><span class="p">,</span> <span class="mf">143.341</span><span class="p">,</span> <span class="mf">146.352</span><span class="p">,</span> <span class="mf">148.984</span><span class="p">,</span> <span class="mf">151.294</span><span class="p">,</span> <span class="mf">153.33</span><span class="p">,</span> <span class="mf">155.129</span><span class="p">,</span> <span class="mf">156.725</span><span class="p">,</span> <span class="mf">158.145</span><span class="p">,</span> <span class="mf">159.413</span><span class="p">,</span> <span class="mf">160.548</span><span class="p">,</span> <span class="mf">161.567</span><span class="p">],</span> <span class="s">&quot;J/(mol*K)&quot;</span><span class="p">),</span>
+        <span class="n">H298</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">127.614</span><span class="p">,</span> <span class="s">&quot;kJ/mol&quot;</span><span class="p">),</span>
+        <span class="n">S298</span><span class="o">=</span><span class="p">(</span><span class="mf">314.403</span><span class="p">,</span> <span class="s">&quot;J/(mol*K)&quot;</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">lennardJones</span><span class="o">=</span><span class="n">LennardJones</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="p">(</span><span class="mf">5.09e-10</span><span class="p">,</span><span class="s">&quot;m&quot;</span><span class="p">),</span> <span class="n">epsilon</span><span class="o">=</span><span class="p">(</span><span class="mf">6.53048e-21</span><span class="p">,</span><span class="s">&quot;J&quot;</span><span class="p">)),</span>
+    <span class="n">molecularWeight</span><span class="o">=</span><span class="p">(</span><span class="mf">75.0434</span><span class="p">,</span><span class="s">&quot;g/mol&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="path-reaction-parameters">
+<h2>3.3. Path Reaction Parameters<a class="headerlink" href="#path-reaction-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Each path reaction - a reaction directly connecting two molecular configurations
+in the network - is specified using a <tt class="docutils literal"><span class="pre">reaction()</span></tt> block. The following
+parameters are available:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="16%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Required?</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">reactants</span></tt></td>
+<td>All reactions</td>
+<td>A list of strings indicating the labels of the reactant species</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">products</span></tt></td>
+<td>All reactions</td>
+<td>A list of strings indicating the labels of the product species</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">transitionState</span></tt></td>
+<td>All reactions</td>
+<td>Information about the transition state, using a <tt class="docutils literal"><span class="pre">TransitionState()</span></tt> block; see below</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">reversible</span></tt></td>
+<td>&nbsp;</td>
+<td><tt class="xref docutils literal"><span class="pre">True</span></tt> (default) if the reaction is reversible, <tt class="xref docutils literal"><span class="pre">False</span></tt> if not</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">kinetics</span></tt></td>
+<td>&nbsp;</td>
+<td>The high pressure-limit kinetics for the reaction</td>
+</tr>
+</tbody>
+</table>
+<p>The direction and reversibility of the reactions determine how bimolecular
+configurations are divided into reactants. If the bimolecular configuration is
+listed as the reactants or <tt class="docutils literal"><span class="pre">reversible</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the configuration is
+set as a reactant channel. If the bimolecular configuration is listed as the
+products and <tt class="docutils literal"><span class="pre">reversible</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, the configuration is set as a product
+channel.</p>
+<p>The type of information specified with each path reaction determines how the
+microcanonical rate coefficient is computed:</p>
+<ul class="simple">
+<li>If detailed information is known about the transition state, pass both the
+ground-state energy <cite>E0</cite> and the molecular degrees of freedom information
+<cite>states</cite> as parameters to the <tt class="docutils literal"><span class="pre">TransitionState()</span></tt> block. MEASURE will then
+use RRKM theory to compute the <img class="math" src="../_images/math/241b7375c50c3fd63befa4fa93161d6f0961a8a9.png" alt="k(E)"/> values. (The molecular degrees of
+freedom information is given in the same way as for species.)</li>
+<li>If only the high pressure-limit kinetics are known, pass only <cite>E0</cite> to the
+<tt class="docutils literal"><span class="pre">TransitionState()</span></tt> block, and provide the <cite>kinetics</cite> to the <tt class="docutils literal"><span class="pre">reaction()</span></tt>
+block using an <tt class="docutils literal"><span class="pre">Arrhenius()</span></tt> block, where you specify the Arrhenius
+parameters <tt class="docutils literal"><span class="pre">A</span></tt>, <tt class="docutils literal"><span class="pre">n</span></tt>, <tt class="docutils literal"><span class="pre">Ea</span></tt>, and optionally <tt class="docutils literal"><span class="pre">T0</span></tt> (set to 1 K if not
+explicity given). MEASURE will then use the inverse Laplace transform (ILT)
+method to compute the <img class="math" src="../_images/math/241b7375c50c3fd63befa4fa93161d6f0961a8a9.png" alt="k(E)"/> values.</li>
+</ul>
+<p>MEASURE will automatically use the best method that it can, so if you provide
+both the molecular degrees of freedom and the high pressure-limit kinetics -
+as in the example below - RRKM theory will be used.</p>
+<p>The following is an example of a typical reaction item, based on the reaction
+<img class="math" src="../_images/math/d99fd770cc5173b62ee07ea2d9dce3b970f783a7.png" alt="\ce{CH3C(=O)OO. -&gt; CH2C=O + HO2}"/>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reaction</span><span class="p">(</span>
+    <span class="n">reactants</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;acetylperoxy&#39;</span><span class="p">],</span>
+    <span class="n">products</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ketene&#39;</span><span class="p">,</span> <span class="s">&#39;hydroperoxyl&#39;</span><span class="p">],</span>
+    <span class="n">reversible</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+    <span class="n">kinetics</span><span class="o">=</span><span class="n">Arrhenius</span><span class="p">(</span>
+        <span class="n">A</span><span class="o">=</span><span class="p">(</span><span class="mf">2.62e9</span><span class="p">,</span><span class="s">&#39;s^-1&#39;</span><span class="p">),</span>
+        <span class="n">n</span><span class="o">=</span><span class="mf">1.24</span><span class="p">,</span>
+        <span class="n">Ea</span><span class="o">=</span><span class="p">(</span><span class="mf">34.06</span><span class="p">,</span><span class="s">&#39;kcal/mol&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">transitionState</span><span class="o">=</span><span class="n">TransitionState</span><span class="p">(</span>
+        <span class="n">E0</span><span class="o">=</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span><span class="s">&#39;kcal/mol&#39;</span><span class="p">),</span>
+        <span class="n">states</span><span class="o">=</span><span class="n">States</span><span class="p">(</span>
+            <span class="n">rotationalConstants</span><span class="o">=</span><span class="p">([</span><span class="mf">55.4256</span><span class="p">,</span> <span class="mf">136.1886</span><span class="p">,</span> <span class="mf">188.2442</span><span class="p">],</span> <span class="s">&#39;amu*angstrom^2&#39;</span><span class="p">),</span>
+            <span class="n">symmetry</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">frequencies</span><span class="o">=</span><span class="p">([</span><span class="mf">59.306</span><span class="p">,</span>  <span class="mf">205.421</span><span class="p">,</span>  <span class="mf">354.483</span><span class="p">,</span>  <span class="mf">468.861</span><span class="p">,</span>  <span class="mf">482.875</span><span class="p">,</span>  <span class="mf">545.574</span><span class="p">,</span>  <span class="mf">657.825</span><span class="p">,</span>  <span class="mf">891.898</span><span class="p">,</span> <span class="mf">1023.947</span><span class="p">,</span> <span class="mf">1085.617</span><span class="p">,</span> <span class="mf">1257.494</span><span class="p">,</span> <span class="mf">1316.937</span><span class="p">,</span> <span class="mf">1378.552</span><span class="p">,</span> <span class="mf">1688.566</span><span class="p">,</span> <span class="mf">2175.346</span><span class="p">,</span> <span class="mf">3079.822</span><span class="p">,</span> <span class="mf">3154.325</span><span class="p">],</span> <span class="s">&#39;cm^-1&#39;</span><span class="p">),</span>
+            <span class="n">frequencyScaleFactor</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>
+            <span class="n">hinderedRotors</span><span class="o">=</span><span class="p">[],</span>
+            <span class="n">spinMultiplicity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">frequency</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1048.9950</span><span class="p">,</span><span class="s">&#39;cm^-1&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="algorithm-parameters">
+<h2>3.4. Algorithm Parameters<a class="headerlink" href="#algorithm-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="collision-model">
+<h3>3.4.1. Collision Model<a class="headerlink" href="#collision-model" title="Permalink to this headline">¶</a></h3>
+<p>The collision model to use when constructing the master equation is specified
+using a <tt class="docutils literal"><span class="pre">collisionModel()</span></tt> block, where you must specify both the <tt class="docutils literal"><span class="pre">type</span></tt>
+of model, the value of any required <tt class="docutils literal"><span class="pre">parameters</span></tt> as a list of quantities,
+and a list of tuples specifying the labels of the species in the bath gas and
+their relative mole fractions. The collision models available are:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">single</span> <span class="pre">exponential</span> <span class="pre">down</span></tt> - Specify <tt class="docutils literal"><span class="pre">alpha0</span></tt>, <tt class="docutils literal"><span class="pre">T0</span></tt> and <tt class="docutils literal"><span class="pre">n</span></tt> for the
+average energy transferred in a deactiving collision</p>
+<div class="math">
+<p><img src="../_images/math/73188eb2ad9c12ec5c4e2161a2ec10f9f50126a3.png" alt="\left&lt; \Delta E_\mathrm{down} \right&gt; = \alpha_0 \left( \frac{T}{T_0} \right)^n" /></p>
+</div></li>
+</ul>
+<p>An example of a typical <tt class="docutils literal"><span class="pre">collisionModel()</span></tt> block is given below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">collisionModel</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s">&#39;single exponential down&#39;</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">&#39;alpha0&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5718</span><span class="p">,</span><span class="s">&#39;kcal/mol&#39;</span><span class="p">),</span>
+        <span class="s">&#39;T0&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">),</span>
+        <span class="s">&#39;n&#39;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">bathGas</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">&#39;nitrogen&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="temperature-and-pressure-ranges">
+<h3>3.4.2. Temperature and Pressure Ranges<a class="headerlink" href="#temperature-and-pressure-ranges" title="Permalink to this headline">¶</a></h3>
+<p>MEASURE will compute the <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> values on a grid of temperature and
+pressure points. The discussion below is for temperatures, but applies
+identically to pressures as well.</p>
+<p>There are two ways to specify the temperature range using a <tt class="docutils literal"><span class="pre">temperatures()</span></tt>
+block:</p>
+<ul>
+<li><p class="first">Give an explicit list of temperature points using the <tt class="docutils literal"><span class="pre">Tlist</span></tt> parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">temperatures</span><span class="p">(</span><span class="n">Tlist</span><span class="o">=</span><span class="p">([</span><span class="mf">300.0</span><span class="p">,</span> <span class="mf">400.0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">,</span> <span class="mf">600.0</span><span class="p">,</span> <span class="mf">700.0</span><span class="p">,</span> <span class="mf">800.0</span><span class="p">,</span> <span class="mf">900.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">],</span><span class="s">&#39;K&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Give the minimum temperature <tt class="docutils literal"><span class="pre">Tmin</span></tt>, maximum temperature <tt class="docutils literal"><span class="pre">Tmax</span></tt>, and
+number of temperatures <tt class="docutils literal"><span class="pre">count</span></tt> to use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">temperatures</span><span class="p">(</span><span class="n">Tmin</span><span class="o">=</span><span class="p">(</span><span class="mf">300.0</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">),</span> <span class="n">Tmax</span><span class="o">=</span><span class="p">(</span><span class="mf">2000.0</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">),</span> <span class="n">count</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>MEASURE will automatically choose the intermediate temperatures based on the
+interpolation model you wish to fit. This is the recommended approach.</p>
+</li>
+</ul>
+<p>An example of typical <tt class="docutils literal"><span class="pre">temperatures()</span></tt> and <tt class="docutils literal"><span class="pre">pressures()</span></tt> blocks is given
+below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">temperatures</span><span class="p">(</span><span class="n">Tmin</span><span class="o">=</span><span class="p">(</span><span class="mf">300.0</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">),</span> <span class="n">Tmax</span><span class="o">=</span><span class="p">(</span><span class="mf">2000.0</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">),</span> <span class="n">count</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">pressures</span><span class="p">(</span><span class="n">Pmin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">),</span> <span class="n">Pmax</span><span class="o">=</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">),</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="energy-grains">
+<h3>3.4.3. Energy Grains<a class="headerlink" href="#energy-grains" title="Permalink to this headline">¶</a></h3>
+<p>Use an <tt class="docutils literal"><span class="pre">energies()</span></tt> block to specify information about the energies to use.
+The required parameters are the minimum grain size <tt class="docutils literal"><span class="pre">dE</span></tt> and/or the minimum
+number of grains <tt class="docutils literal"><span class="pre">count</span></tt>. MEASURE will use whichever of these results in a
+more accurate calculation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You do not need to specify the minimum and maximum energies, as MEASURE can
+determine these automatically.</p>
+</div>
+<p>A typical <tt class="docutils literal"><span class="pre">energies()</span></tt> block is given below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">energies</span><span class="p">(</span><span class="n">dE</span><span class="o">=</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span><span class="s">&#39;kcal/mol&#39;</span><span class="p">),</span> <span class="n">count</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="method">
+<h3>3.4.4. Method<a class="headerlink" href="#method" title="Permalink to this headline">¶</a></h3>
+<p>Use a <tt class="docutils literal"><span class="pre">method()</span></tt> block to specify the approximate method to use when computing
+<img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> values from the full master equation. There are currently three
+methods available: <tt class="docutils literal"><span class="pre">modified</span> <span class="pre">strong</span> <span class="pre">collision</span></tt> (MSC), <tt class="docutils literal"><span class="pre">reservoir</span> <span class="pre">state</span></tt>
+(RS), and <tt class="docutils literal"><span class="pre">chemically-significant</span> <span class="pre">eigenvalues</span></tt> (CSE). The details of each of
+these methods is provided in the <a class="reference internal" href="../theory/index.html"><em>MEASURE Theory Guide</em></a>. In short: MSC is the
+fastest but least accurate, RS usually provides a good balance of speed and
+accuracy, while CSE is the most accurate but is slow and not robust. Currently
+we recommend using MSC during initial explorations, then RS when more accurate
+numbers are needed.</p>
+<p>An example <tt class="docutils literal"><span class="pre">method()</span></tt> block is given below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">method</span><span class="p">(</span><span class="s">&#39;reservoir state&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interpolation-model">
+<h3>3.4.5. Interpolation Model<a class="headerlink" href="#interpolation-model" title="Permalink to this headline">¶</a></h3>
+<p>Finally, use a <tt class="docutils literal"><span class="pre">model()</span></tt> block to specify the interpolation model to fit to
+the computed <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> values. Currently there are two such models
+available:</p>
+<ul>
+<li><p class="first"><strong>Chebyshev polynomials.</strong> You must also provide the number of terms to use in
+the temperature and pressure domains, respectively. The following example uses
+six Chebyshev terms in temperature and four in pressure:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span><span class="p">(</span><span class="s">&#39;chebyshev&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should use fewer terms than the number of grid points in each direction,
+and should allow MEASURE to choose the intermediate temperature and pressure
+grid points.</p>
+</li>
+<li><p class="first"><strong>Pressure-dependent Arrhenius.</strong> A modified Arrhenius expression is fit at
+each pressure; no additional parameters are required:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span><span class="p">(</span><span class="s">&#39;pdeparrhenius&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Of the two, Chebyshev polynomials are more flexible and therefore more likely
+to fit the complex behavior of large networks. However, support for these models
+varies in other chemical kinetics packages.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>3.5. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Perhaps the best way to learn the input file syntax is by example. To that end,
+a number of example input files and their corresponding output have been given
+in the <tt class="docutils literal"><span class="pre">examples</span></tt> directory.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Creating Input Files</a><ul>
+<li><a class="reference internal" href="#syntax">3.1. Syntax</a></li>
+<li><a class="reference internal" href="#species-parameters">3.2. Species Parameters</a></li>
+<li><a class="reference internal" href="#path-reaction-parameters">3.3. Path Reaction Parameters</a></li>
+<li><a class="reference internal" href="#algorithm-parameters">3.4. Algorithm Parameters</a><ul>
+<li><a class="reference internal" href="#collision-model">3.4.1. Collision Model</a></li>
+<li><a class="reference internal" href="#temperature-and-pressure-ranges">3.4.2. Temperature and Pressure Ranges</a></li>
+<li><a class="reference internal" href="#energy-grains">3.4.3. Energy Grains</a></li>
+<li><a class="reference internal" href="#method">3.4.4. Method</a></li>
+<li><a class="reference internal" href="#interpolation-model">3.4.5. Interpolation Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">3.5. Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">2. Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="running.html"
+                        title="next chapter">4. Running MEASURE</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/input.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="4. Running MEASURE"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="2. Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Users&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

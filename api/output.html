@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. measure.output - Output file writing &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Developers’ Guide" href="index.html" />
+    <link rel="next" title="10. measure.simulate - Simulating population distributions" href="simulate.html" />
+    <link rel="prev" title="8. measure.cse - The chemically-significant eigenvalues method" href="cse.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simulate.html" title="10. measure.simulate - Simulating population distributions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cse.html" title="8. measure.cse - The chemically-significant eigenvalues method"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-measure.output">
+<span id="measure-output-output-file-writing"></span><h1>9. <a class="reference internal" href="#module-measure.output" title="measure.output"><tt class="xref py py-mod docutils literal"><span class="pre">measure.output</span></tt></a> - Output file writing<a class="headerlink" href="#module-measure.output" title="Permalink to this headline">¶</a></h1>
+<p>Contains the <a class="reference internal" href="#measure.output.writeOutput" title="measure.output.writeOutput"><tt class="xref py py-meth docutils literal"><span class="pre">writeOutput()</span></tt></a> method for saving output files to disk and
+the <a class="reference internal" href="#measure.output.writeInput" title="measure.output.writeInput"><tt class="xref py py-meth docutils literal"><span class="pre">writeInput()</span></tt></a> method for saving input files to disk. A number of
+helper functions are used by both functions due to the high degree of similarity
+between the input and output file syntax.</p>
+<div class="section" id="input-and-output-file-writing">
+<h2>9.1. Input and Output File Writing<a class="headerlink" href="#input-and-output-file-writing" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="measure.output.writeInput">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeInput</tt><big>(</big><em>path</em>, <em>network</em>, <em>Tlist</em>, <em>Plist</em>, <em>Elist</em>, <em>method</em>, <em>model</em><big>)</big><a class="headerlink" href="#measure.output.writeInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a MEASURE input file to <cite>path</cite> on disk. The parameters needed mirror
+those returned by <tt class="xref py py-meth docutils literal"><span class="pre">readInput()</span></tt>:</p>
+<ul class="simple">
+<li>The <tt class="xref py py-class docutils literal"><span class="pre">Network</span></tt> object <cite>network</cite> representing the unimolecular
+reaction network</li>
+<li>The list of temperatures <cite>Tlist</cite> in K to be used in the master equation
+calculation</li>
+<li>The list of pressures <cite>Plist</cite> in Pa to be used in the master equation
+calculation</li>
+<li>A tuple <cite>Elist</cite> containing the maximum energy grain size in J/mol and the
+minimum number of energy grains to use in the master equation calculation;
+whichever of these results in more energy grains</li>
+<li>The approximate <cite>method</cite> to use to estimate the phenomenological rate
+coefficients <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/></li>
+<li>The interpolation <cite>model</cite> to fit the estimated <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> values to</li>
+</ul>
+<p>If successful, the file created on disk should be able to be read in by
+<tt class="xref py py-meth docutils literal"><span class="pre">readInput()</span></tt> with (hopefully) no loss of fidelity.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeOutput">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeOutput</tt><big>(</big><em>path</em>, <em>network</em>, <em>Tlist</em>, <em>Plist</em>, <em>Elist</em>, <em>method</em>, <em>model</em><big>)</big><a class="headerlink" href="#measure.output.writeOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a MEASURE output file to <cite>path</cite> on disk. The parameters needed mirror
+those returned by <tt class="xref py py-meth docutils literal"><span class="pre">readInput()</span></tt>:</p>
+<ul class="simple">
+<li>The <tt class="xref py py-class docutils literal"><span class="pre">Network</span></tt> object <cite>network</cite> representing the unimolecular
+reaction network</li>
+<li>The list of temperatures <cite>Tlist</cite> in K to be used in the master equation
+calculation</li>
+<li>The list of pressures <cite>Plist</cite> in Pa to be used in the master equation
+calculation</li>
+<li>A tuple <cite>Elist</cite> containing the maximum energy grain size in J/mol and the
+minimum number of energy grains to use in the master equation calculation;
+whichever of these results in more energy grains</li>
+<li>The approximate <cite>method</cite> to use to estimate the phenomenological rate
+coefficients <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/></li>
+<li>The interpolation <cite>model</cite> to fit the estimated <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/> values to</li>
+</ul>
+<p>If successful, the file created on disk will contain all of the species
+and net reaction data, including all phenomenological rate coefficients
+<img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="helper-functions">
+<h2>9.2. Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="measure.output.writeNetworkSpecies">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeNetworkSpecies</tt><big>(</big><em>f</em>, <em>network</em><big>)</big><a class="headerlink" href="#measure.output.writeNetworkSpecies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all species in the given unimolecular reaction <cite>network</cite> to a file
+object`f`. All isomer, reactant, product, and bath gas species are
+automatically written one time each.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeNetworkPathReactions">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeNetworkPathReactions</tt><big>(</big><em>f</em>, <em>network</em><big>)</big><a class="headerlink" href="#measure.output.writeNetworkPathReactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all path reactions in the given unimolecular reaction <cite>network</cite> to a
+file object`f`. The path reactions are those reactions that directly connect
+adjacent molecular configurations; these are the reactions that remain in
+the high-pressure limit.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeNetworkNetReactions">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeNetworkNetReactions</tt><big>(</big><em>f</em>, <em>network</em><big>)</big><a class="headerlink" href="#measure.output.writeNetworkNetReactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all net reactions in the given unimolecular reaction <cite>network</cite> to a
+file object`f`. The net reactions are those reactions that can connect
+any pair of molecular configurations, not just those directly adjacent.
+These are the reactions that have pressure-dependent rate coefficients.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeSpecies">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeSpecies</tt><big>(</big><em>f</em>, <em>spec</em><big>)</big><a class="headerlink" href="#measure.output.writeSpecies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a <tt class="xref py py-class docutils literal"><span class="pre">Species</span></tt> object <cite>spec</cite> to a file object <cite>f</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeReaction">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeReaction</tt><big>(</big><em>f</em>, <em>rxn</em><big>)</big><a class="headerlink" href="#measure.output.writeReaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a <tt class="xref py py-class docutils literal"><span class="pre">Reaction</span></tt> object <cite>rxn</cite> to a file object <cite>f</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writePDepReaction">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writePDepReaction</tt><big>(</big><em>f</em>, <em>rxn</em><big>)</big><a class="headerlink" href="#measure.output.writePDepReaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a <tt class="xref py py-class docutils literal"><span class="pre">Reaction</span></tt> object <cite>rxn</cite> that has pressure-dependent kinetics
+to a file object <cite>f</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.output.writeStates">
+<tt class="descclassname">measure.output.</tt><tt class="descname">writeStates</tt><big>(</big><em>f</em>, <em>states</em>, <em>prefix=''</em><big>)</big><a class="headerlink" href="#measure.output.writeStates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the <tt class="xref py py-class docutils literal"><span class="pre">StatesModel</span></tt> data <cite>states</cite> containing molecular degree of
+freedom data to the file object <cite>f</cite>. The optional parameter <cite>prefix</cite>
+is prepended to each line of the output file, which provides an easy way to
+adjust the indentation.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9. <tt class="docutils literal"><span class="pre">measure.output</span></tt> - Output file writing</a><ul>
+<li><a class="reference internal" href="#input-and-output-file-writing">9.1. Input and Output File Writing</a></li>
+<li><a class="reference internal" href="#helper-functions">9.2. Helper Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cse.html"
+                        title="previous chapter">8. <tt class="docutils literal docutils literal"><span class="pre">measure.cse</span></tt> - The chemically-significant eigenvalues method</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simulate.html"
+                        title="next chapter">10. <tt class="docutils literal"><span class="pre">measure.simulate</span></tt> - Simulating population distributions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/output.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simulate.html" title="10. measure.simulate - Simulating population distributions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cse.html" title="8. measure.cse - The chemically-significant eigenvalues method"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

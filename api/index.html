@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MEASURE Developers’ Guide &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="next" title="1. Introduction" href="introduction.html" />
+    <link rel="prev" title="3. Methods for Determining Phenomenological Rate Coefficients" href="../theory/methods.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../theory/methods.html" title="3. Methods for Determining Phenomenological Rate Coefficients"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="measure-developers-guide">
+<span id="api"></span><h1>MEASURE Developers&#8217; Guide<a class="headerlink" href="#measure-developers-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">2. <tt class="docutils literal"><span class="pre">measure.input</span></tt> - Input file reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network.html">3. <tt class="docutils literal"><span class="pre">measure.network</span></tt> - Unimolecular reaction network objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">4. <tt class="docutils literal"><span class="pre">measure.collision</span></tt> - Collision models and parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#collision-models">4.1. Collision Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collision.html#collision-parameters">4.2. Collision Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reaction.html">5. <tt class="docutils literal"><span class="pre">measure.reaction</span></tt> - Working with reaction rate coefficients</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reaction.html#microcanonical-rate-coefficients">5.1. Microcanonical Rate Coefficients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reaction.html#interpolation-models-for-phenomenological-rate-coefficients">5.2. Interpolation Models for Phenomenological Rate Coefficients</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="msc.html">6. <tt class="docutils literal"><span class="pre">measure.msc</span></tt> - The modified strong collision method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rs.html">7. <tt class="docutils literal"><span class="pre">measure.rs</span></tt> - The reservoir state method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cse.html">8. <tt class="docutils literal"><span class="pre">measure.cse</span></tt> - The chemically-significant eigenvalues method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="output.html">9. <tt class="docutils literal"><span class="pre">measure.output</span></tt> - Output file writing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="output.html#input-and-output-file-writing">9.1. Input and Output File Writing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#helper-functions">9.2. Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulate.html">10. <tt class="docutils literal"><span class="pre">measure.simulate</span></tt> - Simulating population distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">11. <tt class="docutils literal"><span class="pre">measure.settings</span></tt> - Execution settings</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../theory/methods.html"
+                        title="previous chapter">3. Methods for Determining Phenomenological Rate Coefficients</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="next chapter">1. Introduction</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../theory/methods.html" title="3. Methods for Determining Phenomenological Rate Coefficients"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

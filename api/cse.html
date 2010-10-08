@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. measure.cse - The chemically-significant eigenvalues method &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Developers’ Guide" href="index.html" />
+    <link rel="next" title="9. measure.output - Output file writing" href="output.html" />
+    <link rel="prev" title="7. measure.rs - The reservoir state method" href="rs.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="output.html" title="9. measure.output - Output file writing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rs.html" title="7. measure.rs - The reservoir state method"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-measure.cse">
+<span id="measure-cse-the-chemically-significant-eigenvalues-method"></span><h1>8. <a class="reference internal" href="#module-measure.cse" title="measure.cse"><tt class="xref py py-mod docutils literal"><span class="pre">measure.cse</span></tt></a> - The chemically-significant eigenvalues method<a class="headerlink" href="#module-measure.cse" title="Permalink to this headline">¶</a></h1>
+<p>This module provides an implementation of the chemically-significant eigenvalues
+method for reducing a master equation model of unimolecular reaction networks to
+a set of phenomenological rate coefficients <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/>.</p>
+<dl class="class">
+<dt id="measure.cse.ChemicallySignificantEigenvaluesError">
+<em class="property">class </em><tt class="descclassname">measure.cse.</tt><tt class="descname">ChemicallySignificantEigenvaluesError</tt><a class="headerlink" href="#measure.cse.ChemicallySignificantEigenvaluesError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An exception raised when the reservoir state method is unsuccessful for
+any reason. Pass a string describing the cause of the exceptional behavior.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.cse.applyChemicallySignificantEigenvaluesMethod">
+<tt class="descclassname">measure.cse.</tt><tt class="descname">applyChemicallySignificantEigenvaluesMethod</tt><big>(</big><big>)</big><a class="headerlink" href="#measure.cse.applyChemicallySignificantEigenvaluesMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the chemically-significant eigenvalues method to reduce the master
+equation model to a set of phenomenological rate coefficients <img class="math" src="../_images/math/c93ef2271f42445cc7a12cf6322aeca7a868d826.png" alt="k(T,P)"/>
+and a set of time-independent population vectors <img class="math" src="../_images/math/7f365cb2d8349221aea3f882438ffcee7bd96caa.png" alt="\vector{u}_{ij}"/>
+and <img class="math" src="../_images/math/083e6f41da9ade24626abe2ed355a66831e39a3a.png" alt="\vector{v}_{im}"/>. Inputs are the temperature <cite>T</cite> in K; pressure
+<cite>P</cite> in Pa; list of energy grains <cite>Elist</cite> in J/mol; dimensionless densities
+of states for each isomer and reactant channel <cite>densStates</cite>; collision
+matrix <cite>Mcoll</cite> for each isomer; isomerization, association, and dissociation
+microcanonical rate coefficients <cite>Kij</cite>, <cite>Fim</cite>, and <cite>Gnj</cite>, respectively;
+energies of the first reactive grain for each isomer <cite>Ereac</cite> in J/mol;
+and the numbers of isomers, reactant channels, and product channels <cite>Nisom</cite>,
+<cite>Nreac</cite>, and <cite>Nprod</cite>, respectively.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rs.html"
+                        title="previous chapter">7. <tt class="docutils literal"><span class="pre">measure.rs</span></tt> - The reservoir state method</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="output.html"
+                        title="next chapter">9. <tt class="docutils literal"><span class="pre">measure.output</span></tt> - Output file writing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/cse.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="output.html" title="9. measure.output - Output file writing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="rs.html" title="7. measure.rs - The reservoir state method"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. measure.simulate - Simulating population distributions &mdash; MEASURE v0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MEASURE v0.1.0 documentation" href="../index.html" />
+    <link rel="up" title="MEASURE Developers’ Guide" href="index.html" />
+    <link rel="next" title="11. measure.settings - Execution settings" href="settings.html" />
+    <link rel="prev" title="9. measure.output - Output file writing" href="output.html" /> 
+  </head>
+  <body>
+    <div class="header">
+         <img src="../_static/measure_logo.png" alt="MEASURE" />
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="11. measure.settings - Execution settings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="output.html" title="9. measure.output - Output file writing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-measure.simulate">
+<span id="measure-simulate-simulating-population-distributions"></span><h1>10. <a class="reference internal" href="#module-measure.simulate" title="measure.simulate"><tt class="xref py py-mod docutils literal"><span class="pre">measure.simulate</span></tt></a> - Simulating population distributions<a class="headerlink" href="#module-measure.simulate" title="Permalink to this headline">¶</a></h1>
+<p>Contains functions for directly solving the full or reduced master equation
+matrix to generate concentration profiles and population distributions. This
+information is particularly useful in comparing and evaluating the methods for
+reducing the master equation.</p>
+<dl class="function">
+<dt id="measure.simulate.solveFullME">
+<tt class="descclassname">measure.simulate.</tt><tt class="descname">solveFullME</tt><big>(</big><em>network</em>, <em>T</em>, <em>P</em>, <em>Elist</em>, <em>tlist</em>, <em>x0</em>, <em>M</em>, <em>indices</em>, <em>densStates</em><big>)</big><a class="headerlink" href="#measure.simulate.solveFullME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directly solve the full master equation using a stiff ODE solver. Pass the
+reaction <cite>network</cite> to solve, the temperature <cite>T</cite> in K and pressure <cite>P</cite> in
+Pa to solve at, the energies <cite>Elist</cite> in J/mol to use, the output time
+points <cite>tlist</cite> in s, the initial total populations <cite>x0</cite>, the full master
+equation matrix <cite>M</cite>, the accounting matrix <cite>indices</cite> relating isomer and
+energy grain indices to indices of the master equation matrix, and the
+densities of states <cite>densStates</cite> in mol/J of each isomer.
+Returns the times in s, population distributions for each isomer, and total
+population profiles for each configuration.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="measure.simulate.solveReducedME">
+<tt class="descclassname">measure.simulate.</tt><tt class="descname">solveReducedME</tt><big>(</big><em>network</em>, <em>T</em>, <em>P</em>, <em>Elist</em>, <em>tlist</em>, <em>x0</em>, <em>K</em>, <em>p0</em><big>)</big><a class="headerlink" href="#measure.simulate.solveReducedME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directly solve a reduced master equation (set of phenomenological rate
+coefficients) using a stiff ODE solver. Pass the reaction <cite>network</cite> to
+solve, the temperature <cite>T</cite> in K and pressure <cite>P</cite> in Pa to solve at, the
+energies <cite>Elist</cite> in J/mol to use, the output time points <cite>tlist</cite> in s,
+the initial total populations <cite>x0</cite>, the matrix of phenomenological rate
+coefficients <cite>K</cite>, and the pseudo-steady population distributions <cite>p0</cite>.
+Returns the times in s, approximate population distributions for each
+isomer, and total population profiles for each configuration.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="output.html"
+                        title="previous chapter">9. <tt class="docutils literal docutils literal docutils literal"><span class="pre">measure.output</span></tt> - Output file writing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="settings.html"
+                        title="next chapter">11. <tt class="docutils literal docutils literal"><span class="pre">measure.settings</span></tt> - Execution settings</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/simulate.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="11. measure.settings - Execution settings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="output.html" title="9. measure.output - Output file writing"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> |&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >MEASURE Developers&#8217; Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Joshua W. Allen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>
